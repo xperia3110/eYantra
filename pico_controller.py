@@ -25,9 +25,9 @@ class Swift_Pico(Node):
         self.cmd.rc_throttle = 1500
 
         # PID gains for roll, pitch, throttle [roll, pitch, throttle]
-        self.Kp = [0.0, 0.0, 0.0]
-        self.Ki = [0.0, 0.0, 0.0]
-        self.Kd = [0.0, 0.0, 0.0]
+        self.Kp = [28.0, 72.0, 620.0]
+        self.Ki = [0.0, 1.0, 3.0]
+        self.Kd = [70.0, 15.0, 99.0]
 
         self.error = [0, 0, 0]
         self.sum_error = [0, 0, 0]
@@ -107,7 +107,7 @@ class Swift_Pico(Node):
 
             # Apply PID output to appropriate command
             if i == 0:
-                self.cmd.rc_roll = int(1500 + pid_output)
+                self.cmd.rc_roll = int(1500 - pid_output)
                 self.cmd.rc_roll = max(min(self.cmd.rc_roll, 2000), 1000)
                 self.pid_error.roll_error = self.error[i]
             
